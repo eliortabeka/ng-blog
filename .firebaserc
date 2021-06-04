@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "int-ng-blog"
+  },
+  "targets": {
+    "int-ng-blog": {
+      "hosting": {
+        "ng-blog": [
+          "int-ng-blog"
+        ]
+      }
+    }
+  }
+}

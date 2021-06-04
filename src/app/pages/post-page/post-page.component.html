@@ -1,0 +1,7 @@
+<button routerLink="/">Go Back</button>
+<ng-container *ngIf="post">
+  <h2 [innerText]="post.title"></h2>
+  <p [innerText]="post.body"></p>
+</ng-container>
+
+<app-comments [postId]="postId"></app-comments>

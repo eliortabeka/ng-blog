@@ -1,0 +1,18 @@
+<ng-container *ngIf="comments">
+  <h4>{{ comments.length }} Comments</h4>
+</ng-container>
+
+<form (ngSubmit)="sendComment()" [formControl]="commentForm">
+  <label for="comment">Write your opinion!</label>
+  <textarea [formControl]="comment" name="comment" id="comment" cols="30" rows="10"></textarea>
+  <button type="submit">Submit</button>
+</form>
+
+<div class="comment" *ngFor="let comment of comments">
+  <h5>{{ comment.displayName }}</h5>
+  <img [src]="comment.photoURL" [alt]="comment.displayName">
+  <p>{{ comment.comment }}</p>
+  <p>Created At: {{comment.createdAt | date}}</p>
+
+  <button *ngIf="user.uid === comment.uid" (click)="deleteComment(comment)">Delete</button>
+</div>
