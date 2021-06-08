@@ -34,7 +34,7 @@ export class BlogPageComponent implements OnInit, OnDestroy {
 
   getBlog() {
     this.blogSub = this.coreService.getBlog().subscribe((blog: any) => {
-      this.blog = blog;
+      this.blog = blog.sort((a: PostInterface, b: PostInterface) => a.createdAt > b.createdAt ? 1 : -1);
     })
   }
 

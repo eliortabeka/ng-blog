@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CoreService} from "../../services/core.service";
 import {PostInterface} from "../../interfaces/post.interface";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CommentInterface, CommentsDocInterface} from "../../interfaces/comment.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
+import {UserInterface} from "../../interfaces/user.interface";
 
 @Component({
   selector: 'app-post-page',
@@ -18,13 +19,25 @@ export class PostPageComponent implements OnInit, OnDestroy {
   post: PostInterface;
   postSub;
 
+  userSub;
+  user: UserInterface;
+
   constructor(private coreService: CoreService,
+              private router: Router,
+              private authService: AuthService,
               private activatedRoute: ActivatedRoute) {
       this.postId = this.activatedRoute.snapshot.paramMap.get('postID');
   }
 
   ngOnInit(): void {
     this.getPost();
+    this.getUser();
+  }
+
+  getUser() {
+    this.userSub = this.authService.user.subscribe((userDoc: UserInterface) => {
+      this.user = userDoc;
+    })
   }
 
   ngOnDestroy() {
@@ -34,6 +47,13 @@ export class PostPageComponent implements OnInit, OnDestroy {
   getPost() {
     this.postSub = this.coreService.getPost(this.postId).subscribe((postDoc: PostInterface) => {
       this.post = postDoc;
+    })
+  }
+
+  removeThisPost() {
+    this.coreService.removePostById(this.postId).then(() => {
+      alert('Deleted Successfully!');
+      this.router.navigateByUrl('/');
     })
   }
 

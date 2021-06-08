@@ -1,8 +1,10 @@
 <div class="container">
   <h1>Our BLOG</h1>
 
+  <button routerLink="/add" *ngIf="user">Add New</button>
+
   <button *ngIf="!user" (click)="register()">Login to view content</button>
   <button *ngIf="user" (click)="logout()">Logout</button>
 
-  <router-outlet *ngIf="user"></router-outlet>
+  <router-outlet></router-outlet>
 </div>

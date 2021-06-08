@@ -1,0 +1,33 @@
+form {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 20px 0;
+  }
+
+  label,
+  input,
+  textarea {
+    font-size: 18px;
+  }
+
+  label {
+    font-size: 23px;
+    font-weight: bold;
+  }
+
+  button {
+    border: 0;
+    outline: none;
+    background: #ffa100;
+    color: #000000;
+    font-size: 18px;
+    padding: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+}

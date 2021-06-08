@@ -3,6 +3,7 @@ import {AngularFirestore} from "@angular/fire/firestore";
 import {CommentInterface} from "../interfaces/comment.interface";
 import firebase from 'firebase';
 import firestore = firebase.firestore;
+import {PostInterface} from "../interfaces/post.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,16 @@ export class CoreService {
 
   constructor(private afs: AngularFirestore) { }
 
+  removePostById(postId: string) {
+    return this.afs.doc(`posts/${postId}`).delete();
+  }
+
   getBlog():any {
-    return this.afs.collection(`posts`).valueChanges();
+    return this.afs.collection(`posts`).valueChanges({ idField: 'id' });
+  }
+
+  savePost(post: PostInterface) {
+    return this.afs.collection('posts').add(post);
   }
 
   getPost(postId: string):any {

@@ -11,13 +11,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BlogPageComponent } from './pages/blog-page/blog-page.component';
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AddPageComponent } from './pages/add-page/add-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostPageComponent,
     CommentsComponent,
-    BlogPageComponent
+    BlogPageComponent,
+    AddPageComponent
   ],
   imports: [
     BrowserModule,
