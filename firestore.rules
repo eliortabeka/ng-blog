@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /users/{userId} {
-      allow get: if isSignedIn();
+      allow get;
       allow create: if isSignedIn() && isNotExist();
       allow update: if request.auth.uid == userId;
     }
@@ -11,12 +11,16 @@ service cloud.firestore {
     match /posts/{postId} {
       allow read;
       allow create: if isSignedIn() && isNotExist();
-      allow update, delete: if isSignedIn() && request.auth.uid == resource.data.userId;
+      allow update: if isSignedIn() && (request.auth.uid == resource.data.userId) || (userRank(postId));
+      allow delete: if isSignedIn() && request.auth.uid == resource.data.userId;
     }
 
+    // && request.resource.data.rank != null
+
     match /comments/{postId} {
+      allow read;
       allow create: if isSignedIn();
-      allow update: if isSignedIn() && request.resource.data.rank != null;
+      allow update: if isSignedIn();
     }
 
     function isSignedIn() {
@@ -25,6 +29,12 @@ service cloud.firestore {
 
     function isNotExist() {
       return resource == null;
+    }
+
+    function userRank(postId) {
+      return requset.writeField.size() == 1 &&
+      ('score' in request.writeFields) &&
+      !(postId in (get(/databases/$(database)/documents/users/$(request.auth.uid)).data).postsRanked);
     }
 
   }
