@@ -6,5 +6,5 @@ export interface PostInterface {
   title: string;
   body: string;
   comments: CommentInterface[],
-  createdAt: string;
+  createdAt: any;
 }
