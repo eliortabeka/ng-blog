@@ -4,7 +4,7 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow get: if isSignedIn();
-      allow create: if isNotExist();
+      allow create: if isSignedIn() && isNotExist();
       allow update: if request.auth.uid == userId;
     }
 
@@ -12,6 +12,11 @@ service cloud.firestore {
       allow read;
       allow create: if isSignedIn() && isNotExist();
       allow update, delete: if isSignedIn() && request.auth.uid == resource.data.userId;
+    }
+
+    match /comments/{postId} {
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && request.resource.data.rank != null;
     }
 
     function isSignedIn() {
