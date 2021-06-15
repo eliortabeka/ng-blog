@@ -22,6 +22,8 @@ export class PostPageComponent implements OnInit, OnDestroy {
   userSub;
   user: UserInterface;
 
+  userAlreadyVoted: boolean;
+
   constructor(private coreService: CoreService,
               private router: Router,
               private authService: AuthService,
@@ -37,6 +39,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
   getUser() {
     this.userSub = this.authService.user.subscribe((userDoc: UserInterface) => {
       this.user = userDoc;
+      this.userAlreadyVoted = userDoc.voted.includes(this.postId);
     })
   }
 
@@ -51,10 +54,22 @@ export class PostPageComponent implements OnInit, OnDestroy {
   }
 
   removeThisPost() {
-    this.coreService.removePostById(this.postId).then(() => {
+    this.coreService.removePostById(this.postId).then(async () => {
       alert('Deleted Successfully!');
-      this.router.navigateByUrl('/');
+      await this.router.navigateByUrl('/');
     })
+  }
+
+  toggleVote() {
+    if (this.userAlreadyVoted) {
+      this.coreService.voteDownPostScore(this.postId, this.user.uid).then(() => {
+        alert('Down Voted successfully');
+      })
+    } else {
+      this.coreService.voteUPPostScore(this.postId, this.user.uid).then(() => {
+        alert('Voted successfully');
+      })
+    }
   }
 
 }

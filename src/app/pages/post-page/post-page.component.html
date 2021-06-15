@@ -1,7 +1,11 @@
 <button routerLink="/">Go Back</button>
 <ng-container *ngIf="post">
   <h2 [innerText]="post.title"></h2>
-  <h3>Score {{post.score}}</h3>
+  <h3>Score: {{ post.score }}</h3>
+  <button (click)="toggleVote()">
+    <ng-container *ngIf="userAlreadyVoted">Down Vote</ng-container>
+    <ng-container *ngIf="!userAlreadyVoted">Up Vote</ng-container>
+  </button>
   <p [innerText]="post.body"></p>
 </ng-container>
 

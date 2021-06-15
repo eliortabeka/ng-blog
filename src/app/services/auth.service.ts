@@ -35,7 +35,8 @@ export class AuthService {
       email: auth.email,
       displayName: auth.displayName,
       photoURL: auth.photoURL,
-      uid: auth.uid
+      uid: auth.uid,
+      voted: []
     })
   }
 

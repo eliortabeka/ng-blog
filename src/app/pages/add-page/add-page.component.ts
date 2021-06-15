@@ -46,6 +46,7 @@ export class AddPageComponent implements OnInit {
       userId: this.user.uid,
       title: this.getTitle.value,
       body: this.getBody.value,
+      score: 0,
       comments: [],
       createdAt: Date.now()
     }).then(() => {

@@ -2,7 +2,7 @@
   <h4>{{ comments.length }} Comments</h4>
 </ng-container>
 
-<form (ngSubmit)="sendComment()" [formControl]="commentForm" *ngIf="user">
+<form (ngSubmit)="sendComment()" [formGroup]="commentForm" *ngIf="user">
   <label for="comment">Write your opinion!</label>
   <textarea [formControl]="comment" name="comment" id="comment" cols="30" rows="10"></textarea>
   <button type="submit">Submit</button>
@@ -14,5 +14,5 @@
   <p>{{ comment.comment }}</p>
   <p>Created At: {{comment.createdAt | date}}</p>
 
-  <button *ngIf="user.uid === comment.uid" (click)="deleteComment(comment)">Delete</button>
+  <button *ngIf="user?.uid === comment.uid" (click)="deleteComment(comment)">Delete</button>
 </div>
