@@ -6,5 +6,7 @@ admin.initializeApp({
 })
 
 module.exports = {
-  ...require('./claims')
+  ...require('./claims'),
+  ...require('./to-review'),
+  ...require('./notify')
 }

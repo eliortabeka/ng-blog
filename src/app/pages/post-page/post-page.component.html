@@ -1,5 +1,14 @@
 <button routerLink="/">Go Back</button>
 <ng-container *ngIf="post">
+
+  <h1>Published: {{ post.published }}</h1>
+  <button *ngIf="user.role === 'editor'" (click)="publishPost()">Published</button>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
   <h2 [innerText]="post.title"></h2>
   <h3>Score: {{ post.score }}</h3>
   <button (click)="toggleVote()">
@@ -7,6 +16,7 @@
     <ng-container *ngIf="!userAlreadyVoted">Up Vote</ng-container>
   </button>
   <p [innerText]="post.body"></p>
+
 </ng-container>
 
 <app-comments [postId]="postId"></app-comments>

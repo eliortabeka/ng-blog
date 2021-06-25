@@ -1,32 +1,31 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTranporter({
-  service: 'gmail',
-  auth: {
-    user: 'bhypebsc@gmail.com',
-    pass: 'owlbiilfeiggnxym'
-  }
-})
+const db = admin.firestore();
+
+const transporter = require('./transport');
 
 // Auth
 export const userCreated = functions.auth.user().onCreate(async (user:any) => {
 
   if (user.email === 'numeit@gmail.com') {
     await admin.auth().setCustomUserClaims(user.uid, { admin: true });
+    await db.doc(`users/${user.uid}`).update({ [`role`]: 'admin' });
   }
   if (user.email === 'agaigal@gmail.com') {
     await admin.auth().setCustomUserClaims(user.uid, { editor: true });
+    await db.doc(`users/${user.uid}`).update({ [`role`]: 'editor' });
   }
   if (user.email === 'elna.nitz@gmail.com') {
     await admin.auth().setCustomUserClaims(user.uid, { author: true });
+    await db.doc(`users/${user.uid}`).update({ [`role`]: 'author' });
   }
   if (user.email === 'MATAHEL148@GMAIL.COM') {
     await admin.auth().setCustomUserClaims(user.uid, { moderator: true });
+    await db.doc(`users/${user.uid}`).update({ [`role`]: 'moderator' });
   }
 
-  await transporter.sendEmail({
+  await transporter.sendMail({
     from: 'info@bhype.app',
     to: user.email,
     subject: `Hi ${user.displayName} and Welcome to my Blog!`,
@@ -38,7 +37,7 @@ export const userCreated = functions.auth.user().onCreate(async (user:any) => {
         <a href='http://bhype.app'>Read the blog</a>
       </p>
     `
-  })
+  });
 
   return;
 });

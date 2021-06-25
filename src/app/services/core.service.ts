@@ -68,4 +68,10 @@ export class CoreService {
     return Promise.all([updatePost, updateUserDoc]);
   }
 
+  publishPost(postId: string) {
+    return this.afs.doc(`posts/${postId}`).update({
+      [`published`]: true
+    })
+  }
+
 }

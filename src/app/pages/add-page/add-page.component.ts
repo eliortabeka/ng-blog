@@ -44,6 +44,7 @@ export class AddPageComponent implements OnInit {
     }
     this.coreService.savePost({
       userId: this.user.uid,
+      published: false,
       title: this.getTitle.value,
       body: this.getBody.value,
       score: 0,
